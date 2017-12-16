@@ -5,9 +5,25 @@
     xmlns:local="using:GoodRecipe.UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:GoodRecipe.UWP.Models"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    </Grid>
+    <GridView ItemsSource="{x:Bind ViewModel.Recordings}">
+        <GridView.ItemTemplate>
+            <DataTemplate x:Name="ImageOverlayDataTemplate" x:DataType="model:Recording">
+                <Grid Height="180" Width="320" AutomationProperties.Name="{x:Bind CompositionName}">
+                    <Image Source="Placeholder.png" Stretch="UniformToFill"/>
+                    <StackPanel Orientation="Vertical" Height="60" VerticalAlignment="Bottom" Background="{ThemeResource SystemBaseLowColor}" Padding="12">
+                        <TextBlock Text="{x:Bind CompositionName}"/>
+                        <TextBlock Text="{x:Bind ArtistName}" Style="{ThemeResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"/>
+                    </StackPanel>
+                </Grid>
+            </DataTemplate>
+        </GridView.ItemTemplate>
+        <GridView.ItemsPanel>
+            <ItemsPanelTemplate>
+                <ItemsWrapGrid MaximumRowsOrColumns="4" Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+        </GridView.ItemsPanel>
+    </GridView>
 </Page>

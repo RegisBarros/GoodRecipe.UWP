@@ -33,7 +33,7 @@ namespace GoodRecipe.UWP.Views
             {
                 if (menu.NavigateTo != null)
                     CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { FrameContent.Navigate(menu.NavigateTo); });
-            }
+            } 
         }
 
         private void NavigarionView_Loaded(object sender, RoutedEventArgs e)
