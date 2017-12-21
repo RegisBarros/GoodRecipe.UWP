@@ -10,12 +10,12 @@ namespace GoodRecipe.UWP.Views
     /// </summary>
     public sealed partial class HomeView : Page
     {
-        public RecordingViewModel ViewModel { get; set; }
+        public HomeViewModel ViewModel { get; set; }
 
         public HomeView()
         {
             this.InitializeComponent();
-            this.ViewModel = new RecordingViewModel();
+            this.ViewModel = new HomeViewModel();
         }
     }
 }

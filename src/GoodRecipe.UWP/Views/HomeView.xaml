@@ -8,14 +8,35 @@
     xmlns:model="using:GoodRecipe.UWP.Models"
     mc:Ignorable="d">
 
-    <GridView ItemsSource="{x:Bind ViewModel.Recordings}">
+    <Page.Resources>
+        <CollectionViewSource
+            x:Name="RecipesListSource"
+            Source="{x:Bind ViewModel.Categories}"
+            IsSourceGrouped="True"
+            ItemsPath="Recipes"/>
+
+    </Page.Resources>
+    <GridView ItemsSource="{Binding Source={StaticResource RecipesListSource}}">
+        <GridView.GroupStyle>
+            <GroupStyle>
+                <GroupStyle.HeaderTemplate>
+                    <DataTemplate x:DataType="model:Category">
+                        <Grid Margin="1,0,0,6">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{x:Bind Title}" Margin="3,-7,10,10" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="NoWrap" />
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </GroupStyle.HeaderTemplate>
+            </GroupStyle>
+        </GridView.GroupStyle>
         <GridView.ItemTemplate>
-            <DataTemplate x:Name="ImageOverlayDataTemplate" x:DataType="model:Recording">
-                <Grid Height="180" Width="320" AutomationProperties.Name="{x:Bind CompositionName}">
+            <DataTemplate x:Name="ImageOverlayDataTemplate" x:DataType="model:Recipe">
+                <Grid Height="180" Width="320" AutomationProperties.Name="{x:Bind Titulo}">
                     <Image Source="Placeholder.png" Stretch="UniformToFill"/>
-                    <StackPanel Orientation="Vertical" Height="60" VerticalAlignment="Bottom" Background="{ThemeResource SystemBaseLowColor}" Padding="12">
-                        <TextBlock Text="{x:Bind CompositionName}"/>
-                        <TextBlock Text="{x:Bind ArtistName}" Style="{ThemeResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"/>
+                    <StackPanel Orientation="Vertical" Height="60" VerticalAlignment="Bottom" Padding="12">
+                        <TextBlock Text="{x:Bind Descricao}"/>
+                        <TextBlock Text="{x:Bind TempoPreparo}" />
                     </StackPanel>
                 </Grid>
             </DataTemplate>
