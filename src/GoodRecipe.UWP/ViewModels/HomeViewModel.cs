@@ -1,16 +1,20 @@
 ﻿using GoodRecipe.UWP.Abstracts;
+using GoodRecipe.UWP.Data.Repositories;
 using GoodRecipe.UWP.Models;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace GoodRecipe.UWP.ViewModels
 {
     public class HomeViewModel : NotifyableClass
     {
-        public ObservableCollection<Category> Categories { get; set; }
+        public RecipeRepository RecipeRepository { get; private set; } = RecipeRepository.Instance;
 
-        public HomeViewModel()
+        public ObservableCollection<Category> Categories => RecipeRepository.Categories;
+
+        public async Task Initialize()
         {
-            Categories = GetCategories();
+            await RecipeRepository.LoadAll();
         }
 
         private ObservableCollection<Category> GetCategories()

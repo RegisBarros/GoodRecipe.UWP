@@ -16,6 +16,12 @@ namespace GoodRecipe.UWP.Views
         {
             this.InitializeComponent();
             this.ViewModel = new HomeViewModel();
+            this.Loaded += HomeView_Load;
+        }
+
+        private async void HomeView_Load(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            await ViewModel.Initialize();
         }
     }
 }

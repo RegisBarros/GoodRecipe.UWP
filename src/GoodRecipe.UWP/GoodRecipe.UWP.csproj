@@ -99,6 +99,11 @@
     <Compile Include="Data\AppDbContext.cs" />
     <Compile Include="Data\Interfaces\IRepository.cs" />
     <Compile Include="Data\Repositories\RecipeRepository.cs" />
+    <Compile Include="Migrations\20171222235518_Initial.cs" />
+    <Compile Include="Migrations\20171222235518_Initial.designer.cs">
+      <DependentUpon>20171222235518_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\AppDbContextModelSnapshot.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\MenuItem.cs" />
     <Compile Include="Models\Recipe.cs" />

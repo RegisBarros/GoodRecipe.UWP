@@ -32,11 +32,11 @@
         </GridView.GroupStyle>
         <GridView.ItemTemplate>
             <DataTemplate x:Name="ImageOverlayDataTemplate" x:DataType="model:Recipe">
-                <Grid Height="180" Width="320" AutomationProperties.Name="{x:Bind Titulo}">
+                <Grid Height="180" Width="320" AutomationProperties.Name="{x:Bind Title}">
                     <Image Source="Placeholder.png" Stretch="UniformToFill"/>
                     <StackPanel Orientation="Vertical" Height="60" VerticalAlignment="Bottom" Padding="12">
-                        <TextBlock Text="{x:Bind Descricao}"/>
-                        <TextBlock Text="{x:Bind TempoPreparo}" />
+                        <TextBlock Text="{x:Bind Description}"/>
+                        <TextBlock Text="{x:Bind ReadyInTIme}" />
                     </StackPanel>
                 </Grid>
             </DataTemplate>

@@ -1,4 +1,6 @@
-﻿using GoodRecipe.UWP.Views;
+﻿using GoodRecipe.UWP.Data;
+using GoodRecipe.UWP.Views;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,6 +33,11 @@ namespace GoodRecipe.UWP
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            using (var context = new AppDbContext())
+            {
+                context.Database.Migrate();
+            }
         }
 
         /// <summary>
