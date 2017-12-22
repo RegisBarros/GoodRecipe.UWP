@@ -1,4 +1,5 @@
-﻿using GoodRecipe.UWP.Models;
+﻿using GoodRecipe.UWP.Abstracts;
+using GoodRecipe.UWP.Models;
 using GoodRecipe.UWP.Views;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +8,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace GoodRecipe.UWP.ViewModels
 {
-    public class NavigationViewModel : BaseViewModel
+    public class NavigationViewModel : NotifyableClass
     {
         public ObservableCollection<MenuItem> MenuItems { get; set; }
 

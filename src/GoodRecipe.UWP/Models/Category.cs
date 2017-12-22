@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace GoodRecipe.UWP.Models
@@ -24,6 +25,6 @@ namespace GoodRecipe.UWP.Models
 
         public string Description { get; set; }
 
-        public ObservableCollection<Recipe> Recipes { get; set; }
+        public ICollection<Recipe> Recipes { get; set; }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace GoodRecipe.UWP.ViewModels
+namespace GoodRecipe.UWP.Abstracts
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public abstract class NotifyableClass : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

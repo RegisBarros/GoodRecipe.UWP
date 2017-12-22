@@ -1,9 +1,10 @@
-﻿using GoodRecipe.UWP.Models;
+﻿using GoodRecipe.UWP.Abstracts;
+using GoodRecipe.UWP.Models;
 using System.Collections.ObjectModel;
 
 namespace GoodRecipe.UWP.ViewModels
 {
-    public class HomeViewModel : BaseViewModel
+    public class HomeViewModel : NotifyableClass
     {
         public ObservableCollection<Category> Categories { get; set; }
 

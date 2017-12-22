@@ -4,36 +4,36 @@ namespace GoodRecipe.UWP.Models
 {
     public class Recipe
     {
-        public Recipe(string titulo, string descricao, int tempoPreparo)
+        public Recipe(string title, string description, int readyInTime)
         {
-            Titulo = titulo;
-            Descricao = descricao;
-            TempoPreparo = tempoPreparo;
+            Title = title;
+            Description = description;
+            ReadyInTIme = readyInTime;
         }
 
         public Guid Id { get; set; }
 
-        public string Titulo { get; set; }
+        public Guid CategoryId { get; set; }
 
-        public string Descricao { get; set; }
+        public Category Category { get; set; }
 
-        public string Ingredientes { get; set; }
+        public string Title { get; set; }
 
-        public string Preparo { get; set; }
+        public string Description { get; set; }
 
-        public string Foto { get; set; }
+        public string Ingredients { get; set; }
+
+        public string Directions { get; set; }
+
+        public string Picture { get; set; }
 
         public string Tags { get; set; }
 
-        public bool Favorita { get; set; }
+        public bool Favorite { get; set; }
 
         /// <summary>
         /// Tempo de preparo em minutos
         /// </summary>
-        public int TempoPreparo { get; set; }
-
-        public Guid CategoriaId { get; set; }
-
-        public Category Categoria { get; set; }
+        public int ReadyInTIme { get; set; }
     }
 }
