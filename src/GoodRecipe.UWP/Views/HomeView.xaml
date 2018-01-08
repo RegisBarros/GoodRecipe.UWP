@@ -36,7 +36,7 @@
                     <Image Source="Placeholder.png" Stretch="UniformToFill"/>
                     <StackPanel Orientation="Vertical" Height="60" VerticalAlignment="Bottom" Padding="12">
                         <TextBlock Text="{x:Bind Description}"/>
-                        <TextBlock Text="{x:Bind ReadyInTIme}" />
+                        <TextBlock Text="{x:Bind ReadyInTIme}" /> 
                     </StackPanel>
                 </Grid>
             </DataTemplate>

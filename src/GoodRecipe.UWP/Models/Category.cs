@@ -8,15 +8,13 @@ namespace GoodRecipe.UWP.Models
     {
         public Category()
         {
-
         }
 
-        public Category(string title, string description, ObservableCollection<Recipe> recipes)
+        public Category(string title, string description)
         {
             Id = Guid.NewGuid();
             Title = title;
             Description = description;
-            Recipes = recipes;
         }
 
         public Guid Id { get; set; }

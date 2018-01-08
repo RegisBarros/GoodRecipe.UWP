@@ -40,5 +40,17 @@ namespace GoodRecipe.UWP.Views
         {
             ViewModel.Initialize();
         }
+
+        public void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (State == PageState.MinWidth700)
+            {
+                EditTodoItem = new TodoItem();
+            }
+            else
+            {
+                NavigationService.Navigate<EditTodoItem>(new TodoItem());
+            }
+        }
     }
 }

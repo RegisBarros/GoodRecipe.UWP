@@ -3,6 +3,7 @@ using GoodRecipe.UWP.Data.Interfaces;
 using GoodRecipe.UWP.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -61,7 +62,9 @@ namespace GoodRecipe.UWP.Data.Repositories
 
         public async Task LoadAll()
         {
-            if (Categories.Count > 0)
+            await Seed();
+
+            if (Categories.Any())
                 return;
 
             using (var context = new AppDbContext())
@@ -98,5 +101,64 @@ namespace GoodRecipe.UWP.Data.Repositories
                 Recipes[collectionIndex] = recipe;
             }
         }
+
+        #region Seed Data
+        private async Task Seed()
+        {
+            var cakesAndPies = new Category("Bolos e Tortas", string.Empty)
+            {
+                Recipes = GetRecipesForCakesAndPies()
+            };
+
+            var snacks = new Category("Lanches", string.Empty)
+            {
+                Recipes = GetRecipesForSnacks()
+            };
+
+            var saladsAndSauces = new Category("Saladas e Molhos", string.Empty)
+            {
+                Recipes = GetRecipesForSaladsAndSauces()
+            };
+
+            using (var context = new AppDbContext())
+            {
+                var categories = await context.Categories.ToListAsync();
+                if (categories.Any())
+                    return;
+
+                context.Categories.Add(cakesAndPies);
+                context.Categories.Add(snacks);
+                context.Categories.Add(saladsAndSauces);
+
+                await context.SaveChangesAsync();
+            }
+        }
+
+        private ICollection<Recipe> GetRecipesForCakesAndPies()
+        {
+            return new List<Recipe>
+            {
+                new Recipe("Torta de palmito", "Torta fácil de preparar para o seu dia a dia", 40),
+                new Recipe("Quiche de alho poró", "Escelente receita de quiche de alho poró", 20)
+            };
+        }
+
+        private ICollection<Recipe> GetRecipesForSnacks()
+        {
+            return new List<Recipe>
+            {
+                new Recipe("Empadão de Frango Especial", "Empadão de Frango Especial", 90),
+                new Recipe("WRAP", "Sanduíche WRAP", 30)
+            };
+        }
+
+        private ICollection<Recipe> GetRecipesForSaladsAndSauces()
+        {
+            return new List<Recipe>
+            {
+                new Recipe("Arroz Especial", "Faça um delicioso arroz", 60)
+            };
+        } 
+        #endregion
     }
 }

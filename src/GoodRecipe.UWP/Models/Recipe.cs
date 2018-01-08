@@ -4,6 +4,8 @@ namespace GoodRecipe.UWP.Models
 {
     public class Recipe
     {
+        public Recipe() { }
+
         public Recipe(string title, string description, int readyInTime)
         {
             Title = title;
