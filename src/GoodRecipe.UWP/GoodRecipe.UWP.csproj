@@ -96,8 +96,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\TypeToObjectConverter.cs" />
     <Compile Include="Data\AppDbContext.cs" />
     <Compile Include="Data\Interfaces\IRepository.cs" />
+    <Compile Include="Data\Repositories\CategoryRepository.cs" />
     <Compile Include="Data\Repositories\RecipeRepository.cs" />
     <Compile Include="Migrations\20171222235518_Initial.cs" />
     <Compile Include="Migrations\20171222235518_Initial.designer.cs">
@@ -109,9 +111,14 @@
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\Recording.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\NavigationService.cs" />
+    <Compile Include="ViewModels\EditRecipeViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
     <Compile Include="ViewModels\RecordingViewModel.cs" />
+    <Compile Include="Views\EditRecipeView.xaml.cs">
+      <DependentUpon>EditRecipeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
@@ -157,6 +164,9 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.1</Version>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>9.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -164,6 +174,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\EditRecipeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HomeView.xaml">
       <SubType>Designer</SubType>

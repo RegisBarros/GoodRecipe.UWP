@@ -1,0 +1,52 @@
+﻿<Page
+    x:Class="GoodRecipe.UWP.Views.EditRecipeView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GoodRecipe.UWP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converter="using:GoodRecipe.UWP.Converters"
+    xmlns:model="using:GoodRecipe.UWP.Models"
+    mc:Ignorable="d">
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton Label="Save" Icon="Save" />
+                <AppBarButton Label="Cancel" Icon="Cancel" />
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Page.Resources>
+        <converter:TypeToObjectConverter x:Key="TypeToObjectConverter"/>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ScrollViewer Margin = "0, 12" >
+            <StackPanel Padding="12">
+                <TextBox Header="Título" Text="{x:Bind ViewModel.Recipe.Title, Mode=TwoWay}" Margin="0,12" />
+                <TextBox Header="Descrição" Text="{x:Bind ViewModel.Recipe.Description, Mode=TwoWay}" Margin="0,12" />
+                <ComboBox Header="Categoria" ItemsSource="{x:Bind ViewModel.Categories}" PlaceholderText="Selecione a categoria da sua tarefa"
+                    SelectedItem="{x:Bind ViewModel.Recipe.Category, Mode=TwoWay, Converter={StaticResource TypeToObjectConverter}}" Margin="0,12">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="model:Category">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{x:Bind Title}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <TextBlock Text="Foto"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Text="{x:Bind ViewModel.Recipe.Picture}" Width="300" HorizontalAlignment="Left"/>
+                    <Button x:Name="uploadButton" Content="Selecionar"  />
+                </StackPanel>
+
+                <Slider Header="Tempo de Preparo (min)" Maximum="200" StepFrequency="5" Margin="0,12" Value="{x:Bind ViewModel.Recipe.ReadyInTIme}"/>
+                <TextBox Header="Ingredientes" TextWrapping="Wrap" AcceptsReturn="True" MaxHeight="172" Height="172" ScrollViewer.VerticalScrollBarVisibility="Visible" Text="{x:Bind ViewModel.Recipe.Ingredients, Mode=TwoWay}" Margin="0,12" />
+                <TextBox Header="Modo de Preparo" TextWrapping="Wrap" AcceptsReturn="True" MaxHeight="172" Height="172" ScrollViewer.VerticalScrollBarVisibility="Visible"  Text="{x:Bind ViewModel.Recipe.Directions, Mode=TwoWay}" Margin="0,12" />
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

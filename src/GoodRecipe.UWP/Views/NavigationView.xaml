@@ -11,8 +11,7 @@
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.PrimaryCommands>
-                <AppBarButton x:Name="saveAppBarButton" Label="Save" Icon="Save" Click="{x:Bind editTodoItemFullViewUserControl.ViewModel.SaveTodoItemButton_Click}" />
-                <AppBarButton Label="Add" Icon="Add" Click="{x:Bind ViewModel.AddButton_Click}" />
+                <AppBarButton Label="Add" Icon="Add" Click="AddButton_Click" />
             </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

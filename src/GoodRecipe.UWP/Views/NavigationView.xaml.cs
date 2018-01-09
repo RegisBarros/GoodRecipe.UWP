@@ -33,6 +33,7 @@ namespace GoodRecipe.UWP.Views
             {
                 if (menu.NavigateTo != null)
                     CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { FrameContent.Navigate(menu.NavigateTo); });
+
             } 
         }
 
@@ -43,14 +44,7 @@ namespace GoodRecipe.UWP.Views
 
         public void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            if (State == PageState.MinWidth700)
-            {
-                EditTodoItem = new TodoItem();
-            }
-            else
-            {
-                NavigationService.Navigate<EditTodoItem>(new TodoItem());
-            }
+            CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { FrameContent.Navigate(typeof(EditRecipeView)); });
         }
     }
 }
