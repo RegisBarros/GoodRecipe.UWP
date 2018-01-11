@@ -40,6 +40,11 @@ namespace GoodRecipe.UWP.Data.Repositories
 
                 context.Recipes.Add(recipe);
 
+                if (recipe.Category != null)
+                {
+                    context.Entry(recipe.Category).State = EntityState.Unchanged;
+                }
+
                 await context.SaveChangesAsync();
             }
         }

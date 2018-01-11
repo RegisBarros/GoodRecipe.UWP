@@ -1,9 +1,8 @@
 ﻿<Page
     x:Class="GoodRecipe.UWP.Views.EditRecipeView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:GoodRecipe.UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converter="using:GoodRecipe.UWP.Converters"
     xmlns:model="using:GoodRecipe.UWP.Models"
@@ -12,7 +11,7 @@
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.PrimaryCommands>
-                <AppBarButton Label="Save" Icon="Save" />
+                <AppBarButton Label="Save" Icon="Save" Click="{x:Bind ViewModel.SaveRecipeButton_Click}" />
                 <AppBarButton Label="Cancel" Icon="Cancel" />
             </CommandBar.PrimaryCommands>
         </CommandBar>
@@ -20,11 +19,29 @@
 
     <Page.Resources>
         <converter:TypeToObjectConverter x:Key="TypeToObjectConverter"/>
+        <converter:NullToVisibilityConverter x:Key="VisibilityConverter" />
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <ScrollViewer Margin = "0, 12" >
             <StackPanel Padding="12">
+                <StackPanel Orientation="Horizontal" Margin="0,20,0,20">
+                    <TextBlock Text="Foto" Margin="0,20,10,20"/>
+                    <Button Margin="0,0,10,0"
+                        Click="{x:Bind ViewModel.OpenPictureButton_Click}">
+                        <Button.Content>
+                            <SymbolIcon Symbol="Pictures" />
+                        </Button.Content>
+                    </Button>
+                    <Button Click="{x:Bind ViewModel.CameraButton_Click}">
+                        <Button.Content>
+                            <SymbolIcon Symbol="Camera" />
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+                
+                <Image Height="200" Source="{x:Bind ViewModel.ImageSource, Mode=OneWay}" 
+                        Visibility="{x:Bind ViewModel.ImageSource, Mode=OneWay, Converter={StaticResource VisibilityConverter}}" />
                 <TextBox Header="Título" Text="{x:Bind ViewModel.Recipe.Title, Mode=TwoWay}" Margin="0,12" />
                 <TextBox Header="Descrição" Text="{x:Bind ViewModel.Recipe.Description, Mode=TwoWay}" Margin="0,12" />
                 <ComboBox Header="Categoria" ItemsSource="{x:Bind ViewModel.Categories}" PlaceholderText="Selecione a categoria da sua tarefa"
@@ -37,13 +54,7 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <TextBlock Text="Foto"/>
-                <StackPanel Orientation="Horizontal">
-                    <TextBox Text="{x:Bind ViewModel.Recipe.Picture}" Width="300" HorizontalAlignment="Left"/>
-                    <Button x:Name="uploadButton" Content="Selecionar"  />
-                </StackPanel>
-
-                <Slider Header="Tempo de Preparo (min)" Maximum="200" StepFrequency="5" Margin="0,12" Value="{x:Bind ViewModel.Recipe.ReadyInTIme}"/>
+                <Slider Header="Tempo de Preparo (min)" Maximum="200" StepFrequency="5" Margin="0,12" Value="{x:Bind ViewModel.Recipe.ReadyInTime, Mode=TwoWay}"/>
                 <TextBox Header="Ingredientes" TextWrapping="Wrap" AcceptsReturn="True" MaxHeight="172" Height="172" ScrollViewer.VerticalScrollBarVisibility="Visible" Text="{x:Bind ViewModel.Recipe.Ingredients, Mode=TwoWay}" Margin="0,12" />
                 <TextBox Header="Modo de Preparo" TextWrapping="Wrap" AcceptsReturn="True" MaxHeight="172" Height="172" ScrollViewer.VerticalScrollBarVisibility="Visible"  Text="{x:Bind ViewModel.Recipe.Directions, Mode=TwoWay}" Margin="0,12" />
             </StackPanel>

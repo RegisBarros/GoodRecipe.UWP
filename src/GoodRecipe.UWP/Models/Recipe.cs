@@ -1,41 +1,110 @@
-﻿using System;
+﻿using GoodRecipe.UWP.Abstracts;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace GoodRecipe.UWP.Models
 {
-    public class Recipe
+    public class Recipe : NotifyableClass
     {
-        public Recipe() { }
-
-        public Recipe(string title, string description, int readyInTime)
+        public Recipe()
         {
-            Title = title;
-            Description = description;
-            ReadyInTIme = readyInTime;
+            Id = Guid.NewGuid();
         }
 
-        public Guid Id { get; set; }
+        public Recipe(string title, string description, double readyInTime)
+        {
+            Id = Guid.NewGuid();
+            Title = title;
+            Description = description;
+            ReadyInTime = readyInTime;
+        }
 
-        public Guid CategoryId { get; set; }
+        private Guid _id;
+
+        [Key]
+        public Guid Id
+        {
+            get { return _id; }
+            set { Set(ref _id, value); }
+        }
+
+        private Guid _categoryId;
+        public Guid CategoryId
+        {
+            get
+            {
+                if (Category != null)
+                    return Category.Id;
+
+                return _categoryId;
+            }
+            set { Set(ref _categoryId, value); }
+        }
 
         public Category Category { get; set; }
 
-        public string Title { get; set; }
+        private string _title;
 
-        public string Description { get; set; }
+        public string Title
+        {
+            get { return _title; }
+            set { Set(ref _title, value); }
+        }
 
-        public string Ingredients { get; set; }
+        private string _description;
 
-        public string Directions { get; set; }
+        public string Description
+        {
+            get { return _description; }
+            set { Set(ref _description, value); }
+        }
 
-        public string Picture { get; set; }
+        private string _ingredients;
 
-        public string Tags { get; set; }
+        public string Ingredients
+        {
+            get { return _ingredients; }
+            set { Set(ref _ingredients, value); }
+        }
 
-        public bool Favorite { get; set; }
+        private string _directions;
 
-        /// <summary>
-        /// Tempo de preparo em minutos
-        /// </summary>
-        public int ReadyInTIme { get; set; }
+        public string Directions
+        {
+            get { return _directions; }
+            set { Set(ref _directions, value); }
+        }
+
+        private byte[] _picture;
+
+        public byte[] Picture
+        {
+            get { return _picture; }
+            set { Set(ref _picture, value); }
+        }
+
+        private string _tags;
+
+        public string Tags
+        {
+            get { return _tags; }
+            set { Set(ref _tags, value); }
+        }
+
+        private bool _favorite;
+
+        public bool Favorite
+        {
+            get { return _favorite; }
+            set { Set(ref _favorite, value); }
+        }
+
+        private double _readyInTime;
+
+        public double ReadyInTime
+        {
+            get { return _readyInTime; }
+            set { Set(ref _readyInTime, value); }
+        }
     }
 }

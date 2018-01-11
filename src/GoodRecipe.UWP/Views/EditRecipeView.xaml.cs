@@ -17,6 +17,8 @@ namespace GoodRecipe.UWP.Views
         public EditRecipeView()
         {
             this.InitializeComponent();
+
+            ViewModel.Initialize();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

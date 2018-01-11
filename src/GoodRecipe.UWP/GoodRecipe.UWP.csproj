@@ -96,6 +96,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\TypeToObjectConverter.cs" />
     <Compile Include="Data\AppDbContext.cs" />
     <Compile Include="Data\Interfaces\IRepository.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\Recording.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\MediaService.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="ViewModels\EditRecipeViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
