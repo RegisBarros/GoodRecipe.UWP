@@ -94,10 +94,13 @@ namespace GoodRecipe.UWP.Data.Repositories
                         Where(r => r.CategoryId == category.Id)
                         .ToListAsync();
 
-                    if (recipes != null)
+                    if (recipes != null && recipes.Any())
+                    {
                         category.Recipes = recipes;
 
-                    Categories.Add(category);
+                        Categories.Add(category);
+                    }
+
                 }
             }
 
@@ -143,10 +146,12 @@ namespace GoodRecipe.UWP.Data.Repositories
                         && r.Favorite)
                         .ToListAsync();
 
-                    if (recipes != null)
+                    if (recipes != null && recipes.Any())
+                    {
                         category.Recipes = recipes;
 
-                    Favorites.Add(category);
+                        Favorites.Add(category);
+                    }
                 }
             }
 
