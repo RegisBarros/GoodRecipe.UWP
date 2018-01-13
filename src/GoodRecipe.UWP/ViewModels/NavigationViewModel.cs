@@ -31,7 +31,7 @@ namespace GoodRecipe.UWP.ViewModels
             var menuItems = new List<MenuItem>();
             menuItems.Add(new MenuItem() { Title = "Home", Icon = Symbol.Home, NavigateTo = typeof(HomeView) });
             menuItems.Add(new MenuItem() { Title = "Favoritos", Icon = Symbol.OutlineStar, NavigateTo = typeof(MyFoodView) });
-            menuItems.Add(new MenuItem() { Title = "Configuração", Icon = Symbol.More, NavigateTo = typeof(SearchView) });
+            menuItems.Add(new MenuItem() { Title = "Configuração", Icon = Symbol.Setting, NavigateTo = typeof(AppSettingsView) });
 
             return menuItems;
         }

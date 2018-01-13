@@ -1,21 +1,17 @@
 ﻿using GoodRecipe.UWP.Data;
+using GoodRecipe.UWP.Services;
 using GoodRecipe.UWP.Views;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Reflection;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace GoodRecipe.UWP
@@ -25,6 +21,22 @@ namespace GoodRecipe.UWP
     /// </summary>
     sealed partial class App : Application
     {
+        private static IEnumerable<string> _availableColors;
+        public static IEnumerable<string> AvailableColors
+        {
+            get
+            {
+                if (_availableColors != null)
+                {
+                    return _availableColors;
+                }
+
+                _availableColors = typeof(Colors).GetRuntimeProperties().Select(c => c.Name);
+
+                return _availableColors;
+            }
+        }
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -33,6 +45,8 @@ namespace GoodRecipe.UWP
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            this.RequestedTheme = StorageService.GetSetting(StorageService.Settings.AppTheme, ApplicationTheme.Light);
 
             using (var context = new AppDbContext())
             {
@@ -58,6 +72,21 @@ namespace GoodRecipe.UWP
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
+                rootFrame.Navigated += (s, evt) =>
+                {
+                    if (rootFrame.CanGoBack)
+                    {
+                        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                            AppViewBackButtonVisibility.Visible;
+
+                    }
+                    else
+                    {
+                        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                            AppViewBackButtonVisibility.Collapsed;
+                    }
+                };
+
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: Load state from previously suspended application
@@ -65,6 +94,14 @@ namespace GoodRecipe.UWP
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
+
+                NavigationService.Frame = rootFrame;
+
+                if (SystemNavigationManager.GetForCurrentView() != null)
+                {
+                    SystemNavigationManager.GetForCurrentView().BackRequested -= App_BackRequested;
+                    SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+                }
             }
 
             if (e.PrelaunchActivated == false)
@@ -78,6 +115,15 @@ namespace GoodRecipe.UWP
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
+            }
+        }
+
+        private void App_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            if (NavigationService.CanGoBack)
+            {
+                NavigationService.GoBack();
+                e.Handled = true;
             }
         }
 
