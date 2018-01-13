@@ -45,14 +45,21 @@ namespace GoodRecipe.UWP.ViewModels
 
         public async Task Initialize()
         {
-           await CategoryRepository.LoadAll();
+            await CategoryRepository.LoadAll();
 
-            Categories = CategoryRepository.Categories;            
+            Categories = CategoryRepository.Categories;
         }
 
         public async void SaveRecipeButton_Click()
         {
-            await RecipeRepository.Create(Recipe);
+            if (await RecipeRepository.Exists(Recipe.Id))
+            {
+                await RecipeRepository.Update(Recipe);
+            }
+            else
+            {
+                await RecipeRepository.Create(Recipe);
+            }
 
             NotificationService.ShowToastNotification(Recipe);
         }

@@ -39,7 +39,7 @@
         </GridView.GroupStyle>
         <GridView.ItemTemplate>
             <DataTemplate x:Name="ImageOverlayDataTemplate" x:DataType="model:Recipe">
-                <Grid Height="180" Width="320" AutomationProperties.Name="{x:Bind Title}">
+                <Grid Height="180" Width="320" AutomationProperties.Name="{x:Bind Title}" Tapped="Grid_Tapped">
                     <Image Source="{x:Bind ImageSource, Mode=OneWay}" Stretch="UniformToFill"/>
                     <StackPanel Orientation="Vertical" Height="60" VerticalAlignment="Bottom" Padding="12">
                         <TextBlock Text="{x:Bind Description}"/>

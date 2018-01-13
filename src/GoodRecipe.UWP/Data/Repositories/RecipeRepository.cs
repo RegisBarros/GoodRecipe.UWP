@@ -46,8 +46,6 @@ namespace GoodRecipe.UWP.Data.Repositories
         {
             using (var context = new AppDbContext())
             {
-                Recipes.Add(recipe);
-
                 context.Recipes.Add(recipe);
 
                 if (recipe.Category != null)
@@ -58,7 +56,13 @@ namespace GoodRecipe.UWP.Data.Repositories
                 await context.SaveChangesAsync();
             }
 
+            // Save picture in app folder
             await MediaService.SavePicture(recipe.Id, recipe.Picture);
+
+            recipe.ImageSource = await MediaService.GetPicture(recipe.Id);
+
+            Category category = Categories.FirstOrDefault(c => c.Id == recipe.CategoryId);
+            category.Recipes.Add(recipe);
         }
 
         public async Task Delete(Recipe recipe)
@@ -121,12 +125,19 @@ namespace GoodRecipe.UWP.Data.Repositories
 
                 await context.SaveChangesAsync();
 
-                var collectionIndex = Recipes.Select((value, index) => new { value, index })
+                Recipe[] recipes = Categories.Select(c => c.Recipes.FirstOrDefault(r => r.Id == recipe.Id)).ToArray();
+
+                var collectionIndex = recipes.Select((value, index) => new { value, index })
                     .Where(c => c.value.Id == recipe.Id)
                     .Select(x => x.index)
                     .First();
 
-                Recipes[collectionIndex] = recipe;
+                // Save picture in app folder
+                await MediaService.SavePicture(recipe.Id, recipe.Picture);
+
+                recipe.ImageSource = await MediaService.GetPicture(recipe.Id);
+
+                recipes[collectionIndex] = recipe;
             }
         }
 
@@ -161,6 +172,14 @@ namespace GoodRecipe.UWP.Data.Repositories
                 {
                     recipe.ImageSource = await MediaService.GetPicture(recipe.Id);
                 }
+            }
+        }
+
+        public async Task<bool> Exists(Guid recipeId)
+        {
+            using (var context = new AppDbContext())
+            {
+                return await context.Recipes.AnyAsync(r => r.Id == recipeId);
             }
         }
 

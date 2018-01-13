@@ -1,4 +1,5 @@
-﻿using GoodRecipe.UWP.ViewModels;
+﻿using GoodRecipe.UWP.Models;
+using GoodRecipe.UWP.ViewModels;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -30,6 +31,13 @@ namespace GoodRecipe.UWP.Views
         public void AddButton_Click(object sender, RoutedEventArgs e)
         {
             CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { Frame.Navigate(typeof(EditRecipeView)); });
+        }
+
+        private void Grid_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            var recipe = ((FrameworkElement)e.OriginalSource).DataContext as Recipe;
+
+            CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { Frame.Navigate(typeof(EditRecipeView), recipe); });
         }
     }
 }
