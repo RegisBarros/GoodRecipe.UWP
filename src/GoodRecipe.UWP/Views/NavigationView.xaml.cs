@@ -20,6 +20,7 @@ namespace GoodRecipe.UWP.Views
         public NavigationView()
         {
             this.InitializeComponent();
+
             ViewModel.Initialize();
         }
 
@@ -32,19 +33,15 @@ namespace GoodRecipe.UWP.Views
             if (menu != null)
             {
                 if (menu.NavigateTo != null)
+                {
                     CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { FrameContent.Navigate(menu.NavigateTo); });
-
+                }
             } 
         }
 
         private void NavigarionView_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel.Initialize();
-        }
-
-        public void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-            CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { FrameContent.Navigate(typeof(EditRecipeView)); });
+            CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { FrameContent.Navigate(typeof(HomeView)); });
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using GoodRecipe.UWP.Models;
 using GoodRecipe.UWP.ViewModels;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -24,6 +26,11 @@ namespace GoodRecipe.UWP.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             ViewModel.Recipe = new Recipe();
+        }
+
+        public void CancelRecipeButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { Frame.Navigate(typeof(HomeView)); });
         }
     }
 }

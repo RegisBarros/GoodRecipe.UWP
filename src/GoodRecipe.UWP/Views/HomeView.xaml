@@ -14,6 +14,15 @@
             IsSourceGrouped="True"
             ItemsPath="Recipes"/>
     </Page.Resources>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton Label="Add" Icon="Add" Click="AddButton_Click" />
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+    
     <GridView ItemsSource="{Binding Source={StaticResource RecipesListSource}}">
         <GridView.GroupStyle>
             <GroupStyle>

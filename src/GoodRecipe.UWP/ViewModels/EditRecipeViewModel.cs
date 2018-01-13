@@ -53,6 +53,8 @@ namespace GoodRecipe.UWP.ViewModels
         public async void SaveRecipeButton_Click()
         {
             await RecipeRepository.Create(Recipe);
+
+            NotificationService.ShowToastNotification(Recipe);
         }
 
         public async void OpenPictureButton_Click()

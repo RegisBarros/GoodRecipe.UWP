@@ -12,7 +12,7 @@
         <CommandBar>
             <CommandBar.PrimaryCommands>
                 <AppBarButton Label="Save" Icon="Save" Click="{x:Bind ViewModel.SaveRecipeButton_Click}" />
-                <AppBarButton Label="Cancel" Icon="Cancel" />
+                <AppBarButton Label="Cancel" Icon="Cancel" Click="CancelRecipeButton_Click" />
             </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
