@@ -1,6 +1,8 @@
 ﻿using GoodRecipe.UWP.Abstracts;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Windows.UI.Xaml.Media;
 
 namespace GoodRecipe.UWP.Models
 {
@@ -105,6 +107,21 @@ namespace GoodRecipe.UWP.Models
         {
             get { return _readyInTime; }
             set { Set(ref _readyInTime, value); }
+        }
+
+        private ImageSource _imageSource;
+
+        [NotMapped]
+        public ImageSource ImageSource
+        {
+            get
+            {
+                if (_imageSource != null)
+                    return _imageSource;
+
+                return _imageSource;
+            }
+            set { Set(ref _imageSource, value); }
         }
     }
 }

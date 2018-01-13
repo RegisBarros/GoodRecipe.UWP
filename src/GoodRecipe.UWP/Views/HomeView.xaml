@@ -1,9 +1,8 @@
 ﻿<Page
     x:Class="GoodRecipe.UWP.Views.HomeView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:GoodRecipe.UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GoodRecipe.UWP.Models"
     mc:Ignorable="d">
@@ -14,7 +13,6 @@
             Source="{x:Bind ViewModel.Categories}"
             IsSourceGrouped="True"
             ItemsPath="Recipes"/>
-
     </Page.Resources>
     <GridView ItemsSource="{Binding Source={StaticResource RecipesListSource}}">
         <GridView.GroupStyle>
@@ -33,7 +31,7 @@
         <GridView.ItemTemplate>
             <DataTemplate x:Name="ImageOverlayDataTemplate" x:DataType="model:Recipe">
                 <Grid Height="180" Width="320" AutomationProperties.Name="{x:Bind Title}">
-                    <Image Source="Placeholder.png" Stretch="UniformToFill"/>
+                    <Image Source="{x:Bind ImageSource, Mode=OneWay}" Stretch="UniformToFill"/>
                     <StackPanel Orientation="Vertical" Height="60" VerticalAlignment="Bottom" Padding="12">
                         <TextBlock Text="{x:Bind Description}"/>
                         <TextBlock Text="{x:Bind ReadyInTime}" /> 

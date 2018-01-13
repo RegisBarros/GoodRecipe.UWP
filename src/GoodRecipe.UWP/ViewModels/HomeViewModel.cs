@@ -16,7 +16,5 @@ namespace GoodRecipe.UWP.ViewModels
         {
             await RecipeRepository.LoadAll();
         }
-
-        
     }
 }

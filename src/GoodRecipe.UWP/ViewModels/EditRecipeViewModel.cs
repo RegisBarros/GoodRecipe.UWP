@@ -47,7 +47,7 @@ namespace GoodRecipe.UWP.ViewModels
         {
            await CategoryRepository.LoadAll();
 
-            Categories = CategoryRepository.Categories;
+            Categories = CategoryRepository.Categories;            
         }
 
         public async void SaveRecipeButton_Click()

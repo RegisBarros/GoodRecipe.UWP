@@ -1,6 +1,7 @@
 ﻿using GoodRecipe.UWP.Abstracts;
 using GoodRecipe.UWP.Data.Interfaces;
 using GoodRecipe.UWP.Models;
+using GoodRecipe.UWP.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,8 @@ namespace GoodRecipe.UWP.Data.Repositories
 
                 await context.SaveChangesAsync();
             }
+
+            await MediaService.SavePicture(recipe.Id, recipe.Picture);
         }
 
         public async Task Delete(Recipe recipe)
@@ -86,6 +89,14 @@ namespace GoodRecipe.UWP.Data.Repositories
                         category.Recipes = recipes;
 
                     Categories.Add(category);
+                }
+            }
+
+            foreach (var category in Categories)
+            {
+                foreach (var recipe in category.Recipes)
+                {
+                    recipe.ImageSource = await MediaService.GetPicture(recipe.Id);
                 }
             }
         }
