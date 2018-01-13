@@ -31,6 +31,15 @@ namespace GoodRecipe.UWP.Data.Repositories
             get { return _recipes; }
         }
 
+
+        private ObservableCollection<Category> _favorites = new ObservableCollection<Category>();
+
+        public ObservableCollection<Category> Favorites
+        {
+            protected set { Set(ref _favorites, value); }
+            get { return _favorites; }
+        }
+
         public static RecipeRepository Instance { get { return _instance.Value; } }
 
         public async Task Create(Recipe recipe)
@@ -118,6 +127,38 @@ namespace GoodRecipe.UWP.Data.Repositories
             }
         }
 
+        public async Task LoadFavorites()
+        {
+            if (Favorites.Any())
+                return;
+
+            using (var context = new AppDbContext())
+            {
+                var categories = await context.Categories.ToListAsync();
+
+                foreach (var category in categories)
+                {
+                    var recipes = await context.Recipes.
+                        Where(r => r.CategoryId == category.Id
+                        && r.Favorite)
+                        .ToListAsync();
+
+                    if (recipes != null)
+                        category.Recipes = recipes;
+
+                    Favorites.Add(category);
+                }
+            }
+
+            foreach (var category in Favorites)
+            {
+                foreach (var recipe in category.Recipes)
+                {
+                    recipe.ImageSource = await MediaService.GetPicture(recipe.Id);
+                }
+            }
+        }
+
         #region Seed Data
         private async Task Seed()
         {
@@ -174,7 +215,7 @@ namespace GoodRecipe.UWP.Data.Repositories
             {
                 new Recipe("Arroz Especial", "Faça um delicioso arroz", 60)
             };
-        } 
+        }
         #endregion
     }
 }

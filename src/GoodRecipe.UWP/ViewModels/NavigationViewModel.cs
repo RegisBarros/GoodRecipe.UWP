@@ -1,11 +1,9 @@
 ﻿using GoodRecipe.UWP.Abstracts;
 using GoodRecipe.UWP.Models;
-using GoodRecipe.UWP.Services;
 using GoodRecipe.UWP.Views;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace GoodRecipe.UWP.ViewModels
@@ -32,8 +30,8 @@ namespace GoodRecipe.UWP.ViewModels
         {
             var menuItems = new List<MenuItem>();
             menuItems.Add(new MenuItem() { Title = "Home", Icon = Symbol.Home, NavigateTo = typeof(HomeView) });
-            menuItems.Add(new MenuItem() { Title = "My Food", Icon = Symbol.OutlineStar, NavigateTo = typeof(MyFoodView) });
-            menuItems.Add(new MenuItem() { Title = "Search", Icon = Symbol.Map, NavigateTo = typeof(SearchView) });
+            menuItems.Add(new MenuItem() { Title = "Favoritos", Icon = Symbol.OutlineStar, NavigateTo = typeof(MyFoodView) });
+            menuItems.Add(new MenuItem() { Title = "Configuração", Icon = Symbol.More, NavigateTo = typeof(SearchView) });
 
             return menuItems;
         }

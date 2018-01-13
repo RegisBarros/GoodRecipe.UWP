@@ -5,9 +5,46 @@
     xmlns:local="using:GoodRecipe.UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:GoodRecipe.UWP.Models"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <CollectionViewSource
+            x:Name="RecipesListSource"
+            Source="{x:Bind ViewModel.Categories}"
+            IsSourceGrouped="True"
+            ItemsPath="Recipes"/>
+    </Page.Resources>
 
-    </Grid>
+    <GridView ItemsSource="{Binding Source={StaticResource RecipesListSource}}">
+        <GridView.GroupStyle>
+            <GroupStyle>
+                <GroupStyle.HeaderTemplate>
+                    <DataTemplate x:DataType="model:Category">
+                        <Grid Margin="1,0,0,6">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{x:Bind Title}" Margin="3,-7,10,10" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="NoWrap" />
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </GroupStyle.HeaderTemplate>
+            </GroupStyle>
+        </GridView.GroupStyle>
+        <GridView.ItemTemplate>
+            <DataTemplate x:Name="ImageOverlayDataTemplate" x:DataType="model:Recipe">
+                <Grid Height="180" Width="320" AutomationProperties.Name="{x:Bind Title}">
+                    <Image Source="{x:Bind ImageSource, Mode=OneWay}" Stretch="UniformToFill"/>
+                    <StackPanel Orientation="Vertical" Height="60" VerticalAlignment="Bottom" Padding="12">
+                        <TextBlock Text="{x:Bind Description}"/>
+                        <TextBlock Text="{x:Bind ReadyInTime}" />
+                    </StackPanel>
+                </Grid>
+            </DataTemplate>
+        </GridView.ItemTemplate>
+        <GridView.ItemsPanel>
+            <ItemsPanelTemplate>
+                <ItemsWrapGrid MaximumRowsOrColumns="4" Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+        </GridView.ItemsPanel>
+    </GridView>
 </Page>

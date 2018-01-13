@@ -20,6 +20,7 @@
     <Page.Resources>
         <converter:TypeToObjectConverter x:Key="TypeToObjectConverter"/>
         <converter:NullToVisibilityConverter x:Key="VisibilityConverter" />
+        <converter:NullToBooleanConverter x:Key="BooleanConverter" />
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -39,10 +40,11 @@
                         </Button.Content>
                     </Button>
                 </StackPanel>
-                
+
                 <Image Height="200" Source="{x:Bind ViewModel.ImageSource, Mode=OneWay}" 
                         Visibility="{x:Bind ViewModel.ImageSource, Mode=OneWay, Converter={StaticResource VisibilityConverter}}" />
                 <TextBox Header="Título" Text="{x:Bind ViewModel.Recipe.Title, Mode=TwoWay}" Margin="0,12" />
+                <CheckBox Content="Favorito" IsChecked="{x:Bind ViewModel.Recipe.Favorite, Mode=TwoWay, Converter={StaticResource BooleanConverter}}" />
                 <TextBox Header="Descrição" Text="{x:Bind ViewModel.Recipe.Description, Mode=TwoWay}" Margin="0,12" />
                 <ComboBox Header="Categoria" ItemsSource="{x:Bind ViewModel.Categories}" PlaceholderText="Selecione a categoria da sua tarefa"
                     SelectedItem="{x:Bind ViewModel.Recipe.Category, Mode=TwoWay, Converter={StaticResource TypeToObjectConverter}}" Margin="0,12">

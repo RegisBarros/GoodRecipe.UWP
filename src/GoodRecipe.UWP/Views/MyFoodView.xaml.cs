@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using GoodRecipe.UWP.ViewModels;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -22,9 +11,18 @@ namespace GoodRecipe.UWP.Views
     /// </summary>
     public sealed partial class MyFoodView : Page
     {
+        public MyFoodViewModel ViewModel { get; set; }
+
         public MyFoodView()
         {
             this.InitializeComponent();
+            this.ViewModel = new MyFoodViewModel();
+            this.Loaded += MyFoodView_Load;
+        }
+
+        private async void MyFoodView_Load(object sender, RoutedEventArgs e)
+        {
+            await ViewModel.Initialize();
         }
     }
 }
