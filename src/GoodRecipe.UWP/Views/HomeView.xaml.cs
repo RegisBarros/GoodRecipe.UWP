@@ -33,7 +33,7 @@ namespace GoodRecipe.UWP.Views
             CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { Frame.Navigate(typeof(EditRecipeView)); });
         }
 
-        private void Grid_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private void StackPanel_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             var recipe = ((FrameworkElement)e.OriginalSource).DataContext as Recipe;
 
