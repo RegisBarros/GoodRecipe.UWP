@@ -58,8 +58,7 @@ namespace GoodRecipe.UWP.Data.Repositories
 
             // Save picture in app folder
             await MediaService.SavePicture(recipe.Id, recipe.Picture);
-
-            recipe.ImageSource = await MediaService.GetPicture(recipe.Id);
+            recipe.ImageSource = await MediaService.GetPicture(recipe.Id, recipe.Picture);
 
             Category category = Categories.FirstOrDefault(c => c.Id == recipe.CategoryId);
             category.Recipes.Add(recipe);
@@ -112,7 +111,7 @@ namespace GoodRecipe.UWP.Data.Repositories
             {
                 foreach (var recipe in category.Recipes)
                 {
-                    recipe.ImageSource = await MediaService.GetPicture(recipe.Id);
+                    recipe.ImageSource = await MediaService.GetPicture(recipe.Id, recipe.Picture);
                 }
             }
         }
@@ -125,19 +124,19 @@ namespace GoodRecipe.UWP.Data.Repositories
 
                 await context.SaveChangesAsync();
 
-                Recipe[] recipes = Categories.Select(c => c.Recipes.FirstOrDefault(r => r.Id == recipe.Id)).ToArray();
-
-                var collectionIndex = recipes.Select((value, index) => new { value, index })
-                    .Where(c => c.value.Id == recipe.Id)
-                    .Select(x => x.index)
-                    .First();
-
                 // Save picture in app folder
                 await MediaService.SavePicture(recipe.Id, recipe.Picture);
+                recipe.ImageSource = await MediaService.GetPicture(recipe.Id, recipe.Picture);
 
-                recipe.ImageSource = await MediaService.GetPicture(recipe.Id);
+                IEnumerable<Category> categories = Categories.Where(c => c.Recipes.Any(r => r.Id == recipe.Id));
 
-                recipes[collectionIndex] = recipe;
+                if (categories != null)
+                {
+                    Recipe oldRegister = categories.Select(c => c.Recipes.FirstOrDefault(r => r.Id == recipe.Id))
+                        .FirstOrDefault();
+
+                    oldRegister = recipe;
+                }
             }
         }
 
@@ -170,7 +169,7 @@ namespace GoodRecipe.UWP.Data.Repositories
             {
                 foreach (var recipe in category.Recipes)
                 {
-                    recipe.ImageSource = await MediaService.GetPicture(recipe.Id);
+                    recipe.ImageSource = await MediaService.GetPicture(recipe.Id, recipe.Picture);
                 }
             }
         }
@@ -186,20 +185,15 @@ namespace GoodRecipe.UWP.Data.Repositories
         #region Seed Data
         private async Task Seed()
         {
-            var cakesAndPies = new Category("Bolos e Tortas", string.Empty)
-            {
-                Recipes = GetRecipesForCakesAndPies()
-            };
-
-            var snacks = new Category("Lanches", string.Empty)
-            {
-                Recipes = GetRecipesForSnacks()
-            };
-
-            var saladsAndSauces = new Category("Saladas e Molhos", string.Empty)
-            {
-                Recipes = GetRecipesForSaladsAndSauces()
-            };
+            var cakesAndPies = new Category("Bolos e Tortas", string.Empty);
+            var snacks = new Category("Lanches", string.Empty);
+            var saladsAndSauces = new Category("Saladas e Molhos", string.Empty);
+            var beef = new Category("Carnes", string.Empty);
+            var chicken = new Category("Aves", string.Empty);
+            var pasta = new Category("Massas", string.Empty);
+            var soups = new Category("Sopas", string.Empty);
+            var drinks = new Category("Bebidas", string.Empty);
+            var fishes = new Category("Peixes", string.Empty);
 
             using (var context = new AppDbContext())
             {
@@ -210,35 +204,15 @@ namespace GoodRecipe.UWP.Data.Repositories
                 context.Categories.Add(cakesAndPies);
                 context.Categories.Add(snacks);
                 context.Categories.Add(saladsAndSauces);
+                context.Categories.Add(beef);
+                context.Categories.Add(chicken);
+                context.Categories.Add(pasta);
+                context.Categories.Add(soups);
+                context.Categories.Add(drinks);
+                context.Categories.Add(fishes);
 
                 await context.SaveChangesAsync();
             }
-        }
-
-        private ICollection<Recipe> GetRecipesForCakesAndPies()
-        {
-            return new List<Recipe>
-            {
-                new Recipe("Torta de palmito", "Torta fácil de preparar para o seu dia a dia", 40),
-                new Recipe("Quiche de alho poró", "Escelente receita de quiche de alho poró", 20)
-            };
-        }
-
-        private ICollection<Recipe> GetRecipesForSnacks()
-        {
-            return new List<Recipe>
-            {
-                new Recipe("Empadão de Frango Especial", "Empadão de Frango Especial", 90),
-                new Recipe("WRAP", "Sanduíche WRAP", 30)
-            };
-        }
-
-        private ICollection<Recipe> GetRecipesForSaladsAndSauces()
-        {
-            return new List<Recipe>
-            {
-                new Recipe("Arroz Especial", "Faça um delicioso arroz", 60)
-            };
         }
         #endregion
     }

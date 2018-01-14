@@ -65,7 +65,7 @@ namespace GoodRecipe.UWP.Services
             }
         }
 
-        public static async Task<BitmapImage> GetPicture(Guid recipeId)
+        public static async Task<BitmapImage> GetPicture(Guid recipeId, byte[] picture, bool force = true)
         {
             string fileName = GetFileName(recipeId);
 
@@ -84,7 +84,19 @@ namespace GoodRecipe.UWP.Services
                     return bitmapImage;
                 }
             }
-            catch 
+            catch (FileNotFoundException ex)
+            {
+                if (force)
+                {
+                    await SavePicture(recipeId, picture);
+
+                    return await GetPicture(recipeId, picture, false);
+                }
+
+                return null;
+
+            }
+            catch
             {
                 return null;
             }
