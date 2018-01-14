@@ -43,7 +43,14 @@ namespace GoodRecipe.UWP.Models
             set { Set(ref _categoryId, value); }
         }
 
-        public Category Category { get; set; }
+
+        private Category _category;
+
+        public Category Category
+        {
+            get { return _category; }
+            set { Set(ref _category, value); }
+        }
 
         private string _title;
 

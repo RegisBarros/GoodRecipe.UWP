@@ -23,7 +23,7 @@
         <converter:NullToBooleanConverter x:Key="BooleanConverter" />
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" MaxWidth="900">
         <ScrollViewer Margin = "0, 12" >
             <StackPanel Padding="12">
                 <StackPanel Orientation="Horizontal" Margin="0,20,0,20">
@@ -51,7 +51,7 @@
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="model:Category">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{x:Bind Title}" />
+                                <TextBlock Text="{x:Bind Title, Mode=TwoWay}" />
                             </StackPanel>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
