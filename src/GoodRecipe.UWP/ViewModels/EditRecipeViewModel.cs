@@ -4,8 +4,10 @@ using GoodRecipe.UWP.Models;
 using GoodRecipe.UWP.Services;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage.Streams;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -52,6 +54,17 @@ namespace GoodRecipe.UWP.ViewModels
 
         public async void SaveRecipeButton_Click()
         {
+            Recipe.Validate();
+
+            if (!Recipe.IsValid)
+            {
+                string message = string.Join("\n", Recipe.Messages);
+
+                ShowMessage(message);
+
+                return;
+            }
+
             if (await RecipeRepository.Exists(Recipe.Id))
             {
                 await RecipeRepository.Update(Recipe);
@@ -107,6 +120,33 @@ namespace GoodRecipe.UWP.ViewModels
 
                 ImageSource = image;
             }
+        }
+
+
+        private bool _dialogTriggered;
+
+        private void ShowMessage(string message)
+        {
+            if (_dialogTriggered)
+            {
+                return;
+            }
+
+            _dialogTriggered = true;
+
+            var dialog = new ContentDialog
+            {
+                Title = "Aviso",
+                Content = message,
+                PrimaryButtonText = "OK"
+            };
+
+            dialog.PrimaryButtonClick += (s, e) =>
+            {
+                _dialogTriggered = false;
+            };
+
+            dialog.ShowAsync();
         }
     }
 }

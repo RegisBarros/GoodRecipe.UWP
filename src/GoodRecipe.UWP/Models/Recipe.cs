@@ -1,7 +1,9 @@
 ﻿using GoodRecipe.UWP.Abstracts;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using Windows.UI.Xaml.Media;
 
 namespace GoodRecipe.UWP.Models
@@ -129,6 +131,38 @@ namespace GoodRecipe.UWP.Models
                 return _imageSource;
             }
             set { Set(ref _imageSource, value); }
+        }
+
+        [NotMapped]
+        public List<string> Messages { get; set; } = new List<string>();
+
+        [NotMapped]
+        public bool IsValid => !Messages.Any();
+
+        public void Validate()
+        {
+            Messages.Clear();
+
+            if (Picture == null)
+                Messages.Add("Adicione uma foto");
+
+            if (string.IsNullOrEmpty(Title))
+                Messages.Add("Informe o titulo");
+
+            if (string.IsNullOrEmpty(Description))
+                Messages.Add("Infrome a descrição");
+
+            if (Category == null)
+                Messages.Add("Selecione um categoria");
+
+            if (ReadyInTime == 0)
+                Messages.Add("Informe o tempo de preparo");
+
+            if (string.IsNullOrEmpty(Ingredients))
+                Messages.Add("Informe os ingredientes");
+
+            if (string.IsNullOrEmpty(Directions))
+                Messages.Add("Informe o modo de preparo");
         }
     }
 }

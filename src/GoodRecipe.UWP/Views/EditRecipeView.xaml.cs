@@ -42,7 +42,5 @@ namespace GoodRecipe.UWP.Views
         {
             CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => { Frame.Navigate(typeof(HomeView)); });
         }
-
-
     }
 }
